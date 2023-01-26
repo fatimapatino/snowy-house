@@ -1,38 +1,50 @@
-<!-- <style>
-<!--   @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap");
-  
+<style>
   body {
     background-color: #002072;
     color: #ffffff;
+    padding: 0px;
+    margin: 0px;
  		font-size: 20px; 
     word-wrap: anywhere;
     font-family: "Noto Serif SC";
     overflow: hidden;
   }
-  
-  .clouds {
-  	position: relative; 
-     width: 100%; 
-     height: 30%;
-    margin: auto; 
-    font-family: monospace; 
-  }
-  .snow {
+  .top {
     position: relative;
     width: 100%;
-    height: 50%;
+    height: 255px;
   }
-  .houses{ -->
-<!--     position: relative;
+/*   .clouds {
+  	position: relative; 
+    width: 100%; 
+    height: 30%;
+    margin: auto; 
+    font-family: monospace; 
+  } */
+  #snow1 {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    color: white;
+    font-size: 30px;
+  }
+  .bottom {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 30%;
+  }
+/*    .houses {
+		position: relative;
     width: 100%;
     height: 20%;
     margin: auto;
-  } -->
-  
-<!-- </style> -->
+  } */
+</style>
 
-<!-- <body>
-  <pre class="clouds">
+<body>
+  <div class="top">
+  	<pre class="clouds">
         _                                  
               (`  ).                   _           
              (     ).              .:(`  )`.       
@@ -45,9 +57,11 @@
 .-'  (_.'          .')                    `(    )  ))
                   (_  )                     ` __.:'   
   
-  </pre>
-  <section class="snow"></section>
-  <pre class="houses">
+  	</pre>
+  </div>
+	<div id="snow1">*</div>
+  <div class="bottom">
+  	<pre class="houses">
                                ~~~~
                             ~~
                           _||____
@@ -56,30 +70,17 @@
 //\\/\\/\\     __/  \_  |__|_|_|__|   \__,
  || || ||     '-o---o-' |  |/|\| /|   /\ \
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  </pre>
-</body>
- -->
-
-<style>
-  #snow1 {
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    color: blue;
-    font-size: 50px;
-  }
-</style>
-
-<body>
-	<div id="snow1">*</div>
+  	</pre>
+  </div>
+  
 </body>
 
 
 <script>
-  let yOffset = 25
-  let xOffset = 25 
-	let cy = window.innerHeight / 3 - yOffset
-  let cx = window.innerWidth / 3 - xOffset
+  let yOffset = 15
+  let xOffset = 15 
+	let cy = window.innerHeight / 2 - yOffset
+  let cx = window.innerWidth / 2 - xOffset
   let y = 0
   let x = 0
   let snow
@@ -96,31 +97,25 @@
   }
   
   function draw() {
-		requestAnimationFrame(draw)
-    y++
-    snow.style.top = y + 'px'
-    theta += 0.05
-    x = Math.cos(theta) * 50 + cx
-    snow.style.left = x + 'px'
-    snow.style.top = y + 'px'
+      requestAnimationFrame(draw)
+      y++
+      theta += 0.05
+      x = Math.cos(theta) * 50 + cx
+      snow.style.left = x + 'px'
+      snow.style.top = y + 100 + 'px'
+    
+  // how do I stop the snowflake from flaoting past the bottom of the screen?  
+    
+  if (y > 200) {
+      return draw
+    	} else {
+        console.log('hello')
+      }
+        
   }
   
   window.addEventListener('load', setup)
-
-</script>
-
-
-<!--   let snow = document.querySelector('.snow')
   
-//   function draw () {
-//     const fps = 1000
-//     setTimeout(draw, fps)
-    
-//     if (Math.random() > 0.5) {
-//       snow.innerText += '*'
-//     } else {
-//       snow.innerText += '.'
-//     }
-    
-//     window.scrollTo(0, snow.scrollHeight)
-//   } -->
+  // how can I add more snowflakes? and make them appear randomly?
+  
+</script>
