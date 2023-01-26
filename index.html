@@ -4,23 +4,29 @@
     color: #ffffff;
     padding: 0px;
     margin: 0px;
- 		font-size: 20px; 
+    font-size: 20px;
     word-wrap: anywhere;
     font-family: "Noto Serif SC";
     overflow: hidden;
   }
+
   .top {
     position: relative;
     width: 100%;
     height: 255px;
   }
-/*   .clouds {
+
+  /*   .clouds {
   	position: relative; 
     width: 100%; 
     height: 30%;
     margin: auto; 
     font-family: monospace; 
   } */
+  
+/*   do i need these styles anymore?
+   */
+  
   #snow1 {
     position: absolute;
     height: 30px;
@@ -28,13 +34,15 @@
     color: white;
     font-size: 30px;
   }
+
   .bottom {
     position: absolute;
     bottom: 0px;
     width: 100%;
-    height: 30%;
+    height: 200px;
   }
-/*    .houses {
+
+  /*    .houses {
 		position: relative;
     width: 100%;
     height: 20%;
@@ -44,7 +52,7 @@
 
 <body>
   <div class="top">
-  	<pre class="clouds">
+    <pre class="clouds">
         _                                  
               (`  ).                   _           
              (     ).              .:(`  )`.       
@@ -59,9 +67,9 @@
   
   	</pre>
   </div>
-	<div id="snow1">*</div>
+  <div id="snow1">*</div>
   <div class="bottom">
-  	<pre class="houses">
+    <pre class="houses">
                                ~~~~
                             ~~
                           _||____
@@ -72,50 +80,62 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   	</pre>
   </div>
-  
+
 </body>
 
-
+<!-- how to get the more houses and clouds in the empty space?
+ -->
 <script>
   let yOffset = 15
-  let xOffset = 15 
-	let cy = window.innerHeight / 2 - yOffset
+  let xOffset = 15
+  let cy = window.innerHeight / 2 - yOffset
   let cx = window.innerWidth / 2 - xOffset
-  let y = 0
-  let x = 0
+  let y = 255
+  let x = 300
   let snow
   let theta = 0
-  
-  function setup () {
-   	snow = document.getElementById('snow1')
-    snow.src = snow + '#' + Math.random()
-    document.body.appendChild(snow)
+
+  function setup() {
+    snow = document.getElementById('snow1')
     snow.style.position = 'absolute'
     snow.style.left = x + 'px'
     snow.style.top = y + 'px'
     draw()
   }
-  
-  function draw() {
-      requestAnimationFrame(draw)
-      y++
-      theta += 0.05
-      x = Math.cos(theta) * 50 + cx
-      snow.style.left = x + 'px'
-      snow.style.top = y + 100 + 'px'
-    
-  // how do I stop the snowflake from flaoting past the bottom of the screen?  
-    
-  if (y > 200) {
-      return draw
-    	} else {
-        console.log('hello')
-      }
-        
+  //why does it star from an edge and glitch to center?
+
+  function ranColor() {
+    const h = Math.random() * 228
+    const s = Math.random() * 16
+    const l = Math.random() * 79
+    return `hsl(${h}, ${s}, ${l})`
   }
-  
+  //hsl is in percentages, so how do i get this to appear?
+
+  for (let i = 0; i < 100; i++) {
+    const snow = document.getElementById('snow1')
+    //why does getting rid of this stop animation?
+    snow.classList.add('snow1')
+    snow.style.color = ranColor()
+    snow.style.left = Math.random() * 100 + 'vw'
+    snow.style.top = Math.random() * 100 + 'vh'
+    document.body.appendChild(snow)
+  }
+  // why aren't 100 snowflakes appearing?
+
+  function draw() {
+    requestAnimationFrame(draw)
+    if (y < 675) {
+      y += 2
+    } else {
+      y = 255
+    }
+    theta += 0.05
+    x = Math.cos(theta) * 30 + cx
+    snow.style.left = x + 'px'
+    snow.style.top = y + 'px'
+  }
+
   window.addEventListener('load', setup)
-  
-  // how can I add more snowflakes? and make them appear randomly?
-  
+  //diff b/t eventListener and calling function and return?
 </script>
