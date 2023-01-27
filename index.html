@@ -34,11 +34,11 @@
     font-size: 30px;
   } */
   
-  #snow {
+/*   #snow {
     position: absolute;
     font-size: 30px;
     font-family: monospace;
-  }
+  } */
 
   .bottom {
     position: absolute;
@@ -69,11 +69,10 @@
 )  )  ( )       --'       `- __.'         :(      )) 
 .-'  (_.'          .')                    `(    )  ))
                   (_  )                     ` __.:'   
-  
   	</pre>
   </div>
 <!--   <div id="snow1">*</div> -->
-  <div id="snow"></div>
+<!--   <div id="snow"></div> -->
   <div class="bottom">
     <pre class="houses">
                                ~~~~
@@ -89,38 +88,42 @@
 
 </body>
 
-<!-- how to get the more houses and clouds in the empty space?
- -->
+
 <script>
  
-  let snow
+  let snow = []
 
   class SnowFlake {
-    constructor() {
+    constructor(top, bottom) {
 			this.yOffset = 15
       this.xOffset = 15
+      this.top = top
+      this.bottom = bottom
       this.cy = window.innerHeight / 2 - this.yOffset
       this.cx = window.innerWidth / 2 - this.xOffset
-      this.y = 30
-      this.x = Math.random() * 100 
+      this.y = top
+      this.x = Math.random() * window.innerWidth 
       this.theta = 0
       this.flake = document.createElement('div')
       this.flake.textContent = '*'
       this.flake.style.color = this.ranColor()
-      this.flake.style.left = this.x + 'vw'
-    	this.flake.style.top = this.y + 'vh'
-      //add snowflake to parent element
+      this.flake.style.left = this.x + 'px'
+    	this.flake.style.top = this.y + 'px'
+      this.flake.style.position = 'absolute'
+      this.flake.style.fontSize= '30px'
+      this.flake.style.fontFamily = 'monospace'
+      // Math.random() * 20 + 10 (range & offset)
     }
     update() {
-      if (this.y < 675) {
+      if (this.y < this.bottom) {
       	this.y += 2
     	} else {
-      	this.y = 255
+      	this.y = this.top
     	}
-      this.theta += 0.05
-      this.x = Math.cos(this.theta) * 30 + this.cx
-      snow.style.left = this.x + 'px'
-      snow.style.top = this.y + 'px'
+      // this.theta += 0.05 (can also make this ran value)
+      // this.x = Math.cos(this.theta) * 30 + this.cx (want a random x position)
+      this.flake.style.left = this.x + 'px'
+      this.flake.style.top = this.y + 'px'
     }
     ranColor() {
       const r = Math.random() * 255
@@ -132,38 +135,25 @@
   
   
   function setup() {
-    snow = document.getElementById('snow')
+    const clouds = document.querySelector('.clouds')
+    const num = window.innerWidth / 10
+    for (let i = 0; i < num; i++) {
+    	const s = new SnowFlake(clouds.offsetHeight - 30, window.innerHeight)
+      document.body.appendChild(s.flake)
+      snow.push(s)
+ 		}
     draw()
   }
-  //why does it star from an edge and glitch to center?
-  
 
-  for (let i = 0; i < 100; i++) {
-    const snow = document.getElementById('snow1')
-    //why does getting rid of this stop animation?
-    snow.classList.add('snow1')
-    snow.style.color = ranColor()
-    snow.style.left = Math.random() * 100 + 'vw'
-    snow.style.top = Math.random() * 100 + 'vh'
-    document.body.appendChild(snow)
-  }
-  // why aren't 100 snowflakes appearing?
 
   function draw() {
     requestAnimationFrame(draw)
-    if (y < 675) {
-      y += 2
-    } else {
-      y = 255
+    for (let i = 0; i < snow.length; i++) {
+			const s = snow[i].update()
     }
-    theta += 0.05
-    x = Math.cos(theta) * 30 + cx
-    snow.style.left = x + 'px'
-    snow.style.top = y + 'px'
+
   }
 
   window.addEventListener('load', setup)
-  //diff b/t eventListener and calling function and return?
-  //when do we do windo vs document.body 
-  //does appendChild ad more than one div
+
 </script>
