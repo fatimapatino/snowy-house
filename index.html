@@ -100,10 +100,10 @@
       this.top = top
       this.bottom = bottom
       this.cy = window.innerHeight / 2 - this.yOffset
-      this.cx = window.innerWidth / 2 - this.xOffset
-      this.y = top
+      this.cx = window.innerWidth * Math.random() - this.xOffset
+      this.y = Math.random() * top
       this.x = Math.random() * window.innerWidth 
-      this.theta = 0
+      this.theta = Math.random() 
       this.flake = document.createElement('div')
       this.flake.textContent = '*'
       this.flake.style.color = this.ranColor()
@@ -112,7 +112,7 @@
       this.flake.style.position = 'absolute'
       this.flake.style.fontSize= '30px'
       this.flake.style.fontFamily = 'monospace'
-      // Math.random() * 20 + 10 (range & offset)
+      this.radius = Math.random() * 20 + 10
     }
     update() {
       if (this.y < this.bottom) {
@@ -120,8 +120,8 @@
     	} else {
       	this.y = this.top
     	}
-      // this.theta += 0.05 (can also make this ran value)
-      // this.x = Math.cos(this.theta) * 30 + this.cx (want a random x position)
+      this.theta += Math.random() * 0.05
+      this.x = Math.cos(this.theta) * this.radius + this.cx
       this.flake.style.left = this.x + 'px'
       this.flake.style.top = this.y + 'px'
     }
@@ -136,7 +136,7 @@
   
   function setup() {
     const clouds = document.querySelector('.clouds')
-    const num = window.innerWidth / 10
+    const num = window.innerWidth / 15
     for (let i = 0; i < num; i++) {
     	const s = new SnowFlake(clouds.offsetHeight - 30, window.innerHeight)
       document.body.appendChild(s.flake)
