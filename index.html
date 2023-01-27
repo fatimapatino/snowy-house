@@ -27,12 +27,17 @@
 /*   do i need these styles anymore?
    */
   
-  #snow1 {
+/*   #snow1 {
     position: absolute;
     height: 30px;
     width: 30px;
-    color: white;
     font-size: 30px;
+  } */
+  
+  #snow {
+    position: absolute;
+    font-size: 30px;
+    font-family: monospace;
   }
 
   .bottom {
@@ -67,7 +72,8 @@
   
   	</pre>
   </div>
-  <div id="snow1">*</div>
+<!--   <div id="snow1">*</div> -->
+  <div id="snow"></div>
   <div class="bottom">
     <pre class="houses">
                                ~~~~
@@ -86,31 +92,51 @@
 <!-- how to get the more houses and clouds in the empty space?
  -->
 <script>
-  let yOffset = 15
-  let xOffset = 15
-  let cy = window.innerHeight / 2 - yOffset
-  let cx = window.innerWidth / 2 - xOffset
-  let y = 255
-  let x = 300
+ 
   let snow
-  let theta = 0
 
+  class SnowFlake {
+    constructor() {
+			this.yOffset = 15
+      this.xOffset = 15
+      this.cy = window.innerHeight / 2 - this.yOffset
+      this.cx = window.innerWidth / 2 - this.xOffset
+      this.y = 30
+      this.x = Math.random() * 100 
+      this.theta = 0
+      this.flake = document.createElement('div')
+      this.flake.textContent = '*'
+      this.flake.style.color = this.ranColor()
+      this.flake.style.left = this.x + 'vw'
+    	this.flake.style.top = this.y + 'vh'
+      //add snowflake to parent element
+    }
+    update() {
+      if (this.y < 675) {
+      	this.y += 2
+    	} else {
+      	this.y = 255
+    	}
+      this.theta += 0.05
+      this.x = Math.cos(this.theta) * 30 + this.cx
+      snow.style.left = this.x + 'px'
+      snow.style.top = this.y + 'px'
+    }
+    ranColor() {
+      const r = Math.random() * 255
+      const g = Math.random() * 255
+      const b = Math.random() * 255
+      return `rgb(${r}, ${g}, ${b})`
+ 	 }
+  }
+  
+  
   function setup() {
-    snow = document.getElementById('snow1')
-    snow.style.position = 'absolute'
-    snow.style.left = x + 'px'
-    snow.style.top = y + 'px'
+    snow = document.getElementById('snow')
     draw()
   }
   //why does it star from an edge and glitch to center?
-
-  function ranColor() {
-    const h = Math.random() * 228
-    const s = Math.random() * 16
-    const l = Math.random() * 79
-    return `hsl(${h}, ${s}, ${l})`
-  }
-  //hsl is in percentages, so how do i get this to appear?
+  
 
   for (let i = 0; i < 100; i++) {
     const snow = document.getElementById('snow1')
@@ -138,4 +164,6 @@
 
   window.addEventListener('load', setup)
   //diff b/t eventListener and calling function and return?
+  //when do we do windo vs document.body 
+  //does appendChild ad more than one div
 </script>
